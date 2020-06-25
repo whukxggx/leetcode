@@ -4,6 +4,7 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+#include<string.h>
 #include<stack>
 #include<map>
 #include<unordered_map>
