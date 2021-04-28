@@ -26,3 +26,37 @@ class Solution {
 	  }
 };
 
+
+class Solution {
+public:
+	bool isMatch(string s, string p) {
+		int ssize = s.size();
+		int psize = p.size();
+
+		//vec[i][j] s前i个是否与p前j个匹配
+		vector<vector<bool>> vec(ssize+1, vector<bool>(psize+1));
+		vec[0][0] = true;
+		//i j 代表前几个
+		for (int i = 0; i <= ssize; ++i) {
+			for (int j = 1; j <= psize; ++j) {
+				if (p[j-1] != '*') {
+					if (i != 0) {
+						if (s[i-1] == p[j - 1] || p[j - 1] == '.') {
+							vec[i][j] = vec[i - 1][j - 1];
+						}
+					}
+				}
+				//p[j]是*时
+				else {
+					if (j >= 2) {
+						vec[i][j] = vec[i][j - 2];
+					}
+					if (j >= 2 && i >= 1 && (s[i - 1] == p[j - 2] || p[j - 2] == '.')) {
+						vec[i][j] = vec[i][j] || vec[i - 1][j];
+					}
+				}
+			}
+		}
+		return vec[ssize][psize];
+	}
+};
